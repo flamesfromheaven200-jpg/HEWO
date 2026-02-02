@@ -2,36 +2,38 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>💖 Valentine?</title>
+  <title>💖 Valentine</title>
   <style>
     body {
-      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
-      font-family: 'Comic Sans MS', cursive;
-      text-align: center;
+      margin: 0;
       height: 100vh;
+      background: linear-gradient(135deg, #ffb6c1, #ffc0cb);
+      font-family: 'Comic Sans MS', cursive;
       overflow: hidden;
+      text-align: center;
     }
 
     h1 {
       margin-top: 80px;
       font-size: 3rem;
-      color: #fff;
-      text-shadow: 2px 2px 8px #ff4d6d;
+      color: white;
+      text-shadow: 0 0 15px #ff4d6d;
     }
 
     button {
-      padding: 15px 30px;
-      font-size: 1.5rem;
+      padding: 15px 35px;
+      font-size: 1.6rem;
+      border-radius: 40px;
       border: none;
-      border-radius: 30px;
       cursor: pointer;
-      margin: 20px;
       transition: 0.3s;
+      margin: 20px;
     }
 
     #yes {
       background: #ff4d6d;
       color: white;
+      box-shadow: 0 0 25px #ff4d6d;
     }
 
     #no {
@@ -40,23 +42,39 @@
       position: absolute;
     }
 
-    .heart {
+    .float {
       position: absolute;
       font-size: 2rem;
-      animation: float 3s linear infinite;
+      animation: floatUp 4s linear forwards;
+      pointer-events: none;
     }
 
-    @keyframes float {
-      0% { transform: translateY(0); opacity: 1; }
-      100% { transform: translateY(-600px); opacity: 0; }
+    @keyframes floatUp {
+      from { transform: translateY(0); opacity: 1; }
+      to { transform: translateY(-700px); opacity: 0; }
+    }
+
+    .note {
+      position: absolute;
+      background: white;
+      padding: 10px 18px;
+      border-radius: 20px;
+      font-size: 1rem;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      animation: fade 4s forwards;
+    }
+
+    @keyframes fade {
+      from { opacity: 1; }
+      to { opacity: 0; }
     }
   </style>
 </head>
 <body>
 
-  <h1 id="question">Will you be my Valentine? 💘</h1>
+  <h1 id="question">Sowgu, will you be my Valentine? 💖🌸</h1>
 
-  <button id="yes">Yes 💖</button>
+  <button id="yes">Yes 💕</button>
   <button id="no">No 😐</button>
 
   <script>
@@ -65,15 +83,30 @@
     const question = document.getElementById("question");
 
     let yesCount = 0;
+    let clickCount = 0;
+
+    const yesTexts = [
+      "Really?? 🥹💞",
+      "Like REALLY really?? 😳",
+      "No takebacks 😏",
+      "Okay… I’m believing you now 💖",
+      "YAYYY 💍 I LOVE YOU SOWGU 💘🌸"
+    ];
+
+    const loveNotes = [
+      "You're my favorite person 💕",
+      "I smile because of you 🌷",
+      "Forever starts with us 💖",
+      "You make my world softer 🌸",
+      "My heart chose you 💘"
+    ];
 
     yesBtn.onclick = () => {
-      yesCount++;
-
-      if (yesCount === 1) question.innerText = "Really?? 🥹💞";
-      else if (yesCount === 2) question.innerText = "Like REALLY really?? 😳";
-      else {
-        question.innerText = "YAYYYY 💍💖 I LOVE YOU!!!";
-        startHearts();
+      if (yesCount < yesTexts.length) {
+        question.innerText = yesTexts[yesCount];
+        yesBtn.style.transform = `scale(${1 + yesCount * 0.1})`;
+        yesCount++;
+        spawnLove();
       }
     };
 
@@ -82,25 +115,42 @@
       noBtn.style.top = Math.random() * 80 + "vh";
     };
 
-    function startHearts() {
-      setInterval(() => {
-        const heart = document.createElement("div");
-        heart.className = "heart";
-        heart.innerText = "💖";
-        heart.style.left = Math.random() * 100 + "vw";
-        heart.style.top = "100vh";
-        document.body.appendChild(heart);
-        setTimeout(() => heart.remove(), 3000);
-      }, 200);
+    function spawnLove() {
+      for (let i = 0; i < 5; i++) {
+        const el = document.createElement("div");
+        el.className = "float";
+        el.innerText = Math.random() > 0.5 ? "💖" : "🌸";
+        el.style.left = Math.random() * 100 + "vw";
+        el.style.top = "100vh";
+        document.body.appendChild(el);
+        setTimeout(() => el.remove(), 4000);
+      }
+
+      const note = document.createElement("div");
+      note.className = "note";
+      note.innerText = loveNotes[Math.floor(Math.random() * loveNotes.length)];
+      note.style.left = Math.random() * 70 + "vw";
+      note.style.top = Math.random() * 70 + "vh";
+      document.body.appendChild(note);
+      setTimeout(() => note.remove(), 4000);
     }
 
-    // 🥚 Easter Egg: Press "L"
+    // 🥚 Easter Egg 1: Press L
     document.addEventListener("keydown", e => {
       if (e.key.toLowerCase() === "l") {
-        alert("Secret unlocked 😏 I love you more 💖");
+        alert("Secret unlocked 💖 I love you more than words can say.");
       }
     });
+
+    // 🥚 Easter Egg 2: Click background 5 times
+    document.body.onclick = () => {
+      clickCount++;
+      if (clickCount === 5) {
+        alert("Okay wow 😳 you found this… I’m never letting you go 💍💖");
+      }
+    };
   </script>
 
 </body>
 </html>
+

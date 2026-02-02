@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>💖 Valentine?</title>
+  <style>
+    body {
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+      font-family: 'Comic Sans MS', cursive;
+      text-align: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    h1 {
+      margin-top: 80px;
+      font-size: 3rem;
+      color: #fff;
+      text-shadow: 2px 2px 8px #ff4d6d;
+    }
+
+    button {
+      padding: 15px 30px;
+      font-size: 1.5rem;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      margin: 20px;
+      transition: 0.3s;
+    }
+
+    #yes {
+      background: #ff4d6d;
+      color: white;
+    }
+
+    #no {
+      background: white;
+      color: #ff4d6d;
+      position: absolute;
+    }
+
+    .heart {
+      position: absolute;
+      font-size: 2rem;
+      animation: float 3s linear infinite;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0); opacity: 1; }
+      100% { transform: translateY(-600px); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <h1 id="question">Will you be my Valentine? 💘</h1>
+
+  <button id="yes">Yes 💖</button>
+  <button id="no">No 😐</button>
+
+  <script>
+    const yesBtn = document.getElementById("yes");
+    const noBtn = document.getElementById("no");
+    const question = document.getElementById("question");
+
+    let yesCount = 0;
+
+    yesBtn.onclick = () => {
+      yesCount++;
+
+      if (yesCount === 1) question.innerText = "Really?? 🥹💞";
+      else if (yesCount === 2) question.innerText = "Like REALLY really?? 😳";
+      else {
+        question.innerText = "YAYYYY 💍💖 I LOVE YOU!!!";
+        startHearts();
+      }
+    };
+
+    noBtn.onmouseover = () => {
+      noBtn.style.left = Math.random() * 80 + "vw";
+      noBtn.style.top = Math.random() * 80 + "vh";
+    };
+
+    function startHearts() {
+      setInterval(() => {
+        const heart = document.createElement("div");
+        heart.className = "heart";
+        heart.innerText = "💖";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.top = "100vh";
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 3000);
+      }, 200);
+    }
+
+    // 🥚 Easter Egg: Press "L"
+    document.addEventListener("keydown", e => {
+      if (e.key.toLowerCase() === "l") {
+        alert("Secret unlocked 😏 I love you more 💖");
+      }
+    });
+  </script>
+
+</body>
+</html>
